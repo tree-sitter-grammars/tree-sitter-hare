@@ -1,0 +1,24 @@
+[package]
+name = "tree-sitter-hare"
+description = "Hare grammar for tree-sitter"
+version = "0.0.1"
+authors = ["Amaan Qureshi <amaanq12@gmail.com>"]
+license = "MIT"
+readme = "bindings/rust/README.md"
+keywords = ["incremental", "parsing", "hare"]
+categories = ["parsing", "text-editors"]
+repository = "https://github.com/amaanq/tree-sitter-hare"
+edition = "2021"
+autoexamples = false
+
+build = "bindings/rust/build.rs"
+include = ["bindings/rust/*", "grammar.js", "queries/*", "src/*"]
+
+[lib]
+path = "bindings/rust/lib.rs"
+
+[dependencies]
+tree-sitter = "~0.20.9"
+
+[build-dependencies]
+cc = "1.0"
