@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-hare",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Hare grammar for tree-sitter",
   "main": "bindings/node",
   "keywords": [
