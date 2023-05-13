@@ -656,11 +656,11 @@ module.exports = grammar({
       '\'',
     ),
 
-    _escape_sequence: $ =>
-      choice(
-        prec(2, token.immediate(seq('\\', /[^abfnrtvxu'"\\?]/))),
-        prec(1, $.escape_sequence),
-      ),
+    _escape_sequence: $ => choice(
+      prec(2, token.immediate(seq('\\', /[^abfnrtvxu'"\\?]/))),
+      prec(1, $.escape_sequence),
+    ),
+
     escape_sequence: _ => token.immediate(seq(
       '\\',
       choice(
@@ -670,7 +670,8 @@ module.exports = grammar({
         /u[0-9a-fA-F]{4}/,
         /u{[0-9a-fA-F]+}/,
         /U[0-9a-fA-F]{8}/,
-      ))),
+      ),
+    )),
 
     boolean: _ => choice('true', 'false'),
 
