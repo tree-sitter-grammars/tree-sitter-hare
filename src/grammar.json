@@ -4604,7 +4604,7 @@
               },
               {
                 "type": "PATTERN",
-                "value": "u{[0-9a-fA-F]+}"
+                "value": "u\\{[0-9a-fA-F]+\\}"
               },
               {
                 "type": "PATTERN",
@@ -4716,25 +4716,5 @@
     "literal",
     "statement",
     "type"
-  ],
-  "PREC": {
-    "PARENTHESES": -1,
-    "ASSIGNMENT": 0,
-    "LOGICAL_XOR": 1,
-    "LOGICAL_OR": 2,
-    "LOGICAL_AND": 3,
-    "BITWISE_OR": 4,
-    "BITWISE_XOR": 5,
-    "BITWISE_AND": 6,
-    "EQUALITY": 7,
-    "COMPARE": 8,
-    "SHIFT": 9,
-    "ADD": 10,
-    "MULTIPLY": 11,
-    "CAST": 12,
-    "UNARY": 13,
-    "CALL": 14,
-    "MEMBER": 15
-  }
+  ]
 }
-
