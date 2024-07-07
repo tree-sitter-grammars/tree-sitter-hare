@@ -678,15 +678,6 @@
         }
       ]
     },
-    "struct_attribute": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "@packed"
-        }
-      ]
-    },
     "parameter": {
       "type": "SEQ",
       "members": [
@@ -1059,8 +1050,8 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "struct_attribute"
+              "type": "STRING",
+              "value": "@packed"
             },
             {
               "type": "BLANK"
