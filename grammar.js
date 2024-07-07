@@ -162,10 +162,6 @@ module.exports = grammar({
       $.declaration_attribute,
     ),
 
-    struct_attribute: _ => choice(
-      '@packed',
-    ),
-
     parameter: $ => seq(
       choice($.identifier, '_'),
       ':',
@@ -219,7 +215,7 @@ module.exports = grammar({
 
     struct_type: $ => seq(
       'struct',
-      optional($.struct_attribute),
+      optional('@packed'),
       '{',
       optionalCommaSep1($.field),
       '}',

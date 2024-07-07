@@ -1460,11 +1460,6 @@
     }
   },
   {
-    "type": "struct_attribute",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "struct_literal",
     "named": true,
     "fields": {},
@@ -1497,10 +1492,6 @@
       "types": [
         {
           "type": "field",
-          "named": true
-        },
-        {
-          "type": "struct_attribute",
           "named": true
         }
       ]
