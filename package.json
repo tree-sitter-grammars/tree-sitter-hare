@@ -11,9 +11,9 @@
   "author": "Amaan Qureshi <amaanq12@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/amaanq/tree-sitter-hare/issues"
+    "url": "https://github.com/tree-sitter-grammars/tree-sitter-hare/issues"
   },
-  "homepage": "https://github.com/amaanq/tree-sitter-hare#readme",
+  "homepage": "https://github.com/tree-sitter-grammars/tree-sitter-hare#readme",
   "dependencies": {
     "nan": "^2.17.0"
   },
@@ -22,7 +22,7 @@
     "eslint-config-google": "^0.14.0",
     "tree-sitter-cli": "^0.20.8"
   },
-  "repository": "https://github.com/amaanq/tree-sitter-hare",
+  "repository": "https://github.com/tree-sitter-grammars/tree-sitter-hare",
   "scripts": {
     "build": "tree-sitter generate && node-gyp build",
     "lint": "eslint grammar.js",
