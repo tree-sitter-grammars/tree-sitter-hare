@@ -7,7 +7,7 @@ license = "MIT"
 readme = "bindings/rust/README.md"
 keywords = ["incremental", "parsing", "hare"]
 categories = ["parsing", "text-editors"]
-repository = "https://github.com/amaanq/tree-sitter-hare"
+repository = "https://github.com/tree-sitter-grammars/tree-sitter-hare"
 edition = "2021"
 autoexamples = false
 
