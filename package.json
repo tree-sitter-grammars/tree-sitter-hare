@@ -3,10 +3,19 @@
   "version": "1.0.0",
   "description": "Hare grammar for tree-sitter",
   "main": "bindings/node",
+  "types": "bindings/node",
   "keywords": [
     "parser",
     "lexer",
     "hare"
+  ],
+  "files": [
+    "grammar.js",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
+    "queries/*",
+    "src/**"
   ],
   "author": "Amaan Qureshi <amaanq12@gmail.com>",
   "license": "MIT",
@@ -15,20 +24,33 @@
   },
   "homepage": "https://github.com/amaanq/tree-sitter-hare#readme",
   "dependencies": {
-    "nan": "^2.17.0"
+    "node-addon-api": "^7.1.0",
+    "node-gyp-build": "^4.8.0"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.21.0"
+  },
+  "peerDependenciesMeta": {
+    "tree_sitter": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "eslint": "^8.40.0",
     "eslint-config-google": "^0.14.0",
-    "tree-sitter-cli": "^0.20.8"
+    "tree-sitter-cli": "^0.22.6",
+    "prebuildify": "^6.0.0"
   },
   "repository": "https://github.com/amaanq/tree-sitter-hare",
   "scripts": {
-    "build": "tree-sitter generate && node-gyp build",
+    "build": "tree-sitter build",
+    "generate": "tree-sitter generate",
     "lint": "eslint grammar.js",
     "parse": "tree-sitter parse",
     "test": "tree-sitter test && script/parse-examples",
-    "test-windows": "tree-sitter test"
+    "test-windows": "tree-sitter test",
+    "install": "node-gyp-build",
+    "prebuildify": "prebuildify --napi --strip"
   },
   "tree-sitter": [
     {
