@@ -264,6 +264,7 @@ module.exports = grammar({
 
     statement: $ => choice(
       $.break_statement,
+      $.continue_statement,
       $.defer_statement,
       $.yield_statement,
       $.static_operation,
@@ -291,6 +292,7 @@ module.exports = grammar({
 
     for_statement: $ => prec.right(seq(
       'for',
+      optional($.label),
       '(',
       optional(seq($.let_expression, ';')),
       seq(
@@ -305,6 +307,8 @@ module.exports = grammar({
 
     break_statement: $ => seq('break', optional($.label), ';'),
 
+    continue_statement: $ => seq('continue', optional($.label), ';'),
+
     defer_statement: $ => seq('defer', $.statement),
 
     return_statement: $ => prec.right(seq('return', optional($.expression))),
@@ -312,7 +316,7 @@ module.exports = grammar({
     yield_statement: $ => seq(
       'yield',
       optional(choice(
-        seq($.label, ',', $.expression),
+        seq($.label, optional(seq(',', $.expression))),
         $.expression,
       )),
       ';',
@@ -498,7 +502,10 @@ module.exports = grammar({
 
     switch_expression: $ => seq(
       'switch',
+      optional($.label),
+      '(',
       $.expression,
+      ')',
       '{',
       repeat($.case),
       '}',
@@ -506,7 +513,10 @@ module.exports = grammar({
 
     match_expression: $ => seq(
       'match',
+      optional($.label),
+      '(',
       $.expression,
+      ')',
       '{',
       repeat($.case),
       '}',
