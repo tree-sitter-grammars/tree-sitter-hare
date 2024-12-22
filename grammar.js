@@ -108,9 +108,7 @@ module.exports = grammar({
 
     name_list: $ => optionalCommaSep1($.identifier),
 
-    declarations: $ => repeat1(
-      seq(optional('export'), $.declaration, ';'),
-    ),
+    declarations: $ => repeat1($.declaration),
 
     declaration: $ => choice(
       $.global_declaration,
@@ -120,8 +118,10 @@ module.exports = grammar({
     ),
 
     global_declaration: $ => seq(
+      optional('export'),
       choice('const', 'let'),
       commaSep1($.global_binding),
+      ';',
     ),
 
     global_binding: $ => seq(
@@ -134,16 +134,21 @@ module.exports = grammar({
     ),
 
     constant_declaration: $ => seq(
+      optional('export'),
       'def',
       commaSep1(seq($.identifier, ':', $.type, '=', $.expression)),
+      ';',
     ),
 
     type_declaration: $ => seq(
+      optional('export'),
       'type',
       optionalCommaSep1(seq($.identifier, '=', $.type)),
+      ';',
     ),
 
     function_declaration: $ => seq(
+      optional('export'),
       repeat($.function_attribute),
       'fn',
       field('name', $.identifier),
@@ -152,6 +157,7 @@ module.exports = grammar({
       ')',
       field('returns', optional($.type)),
       optional(seq('=', field('body', $.expression))),
+      ';',
     ),
 
     function_attribute: $ => choice(
