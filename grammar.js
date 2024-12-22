@@ -108,9 +108,7 @@ module.exports = grammar({
 
     name_list: $ => optionalCommaSep1($.identifier),
 
-    declarations: $ => repeat1(
-      seq(optional('export'), $.declaration, ';'),
-    ),
+    declarations: $ => repeat1($.declaration),
 
     declaration: $ => choice(
       $.global_declaration,
@@ -120,8 +118,10 @@ module.exports = grammar({
     ),
 
     global_declaration: $ => seq(
+      optional('export'),
       choice('const', 'let'),
       commaSep1($.global_binding),
+      ';',
     ),
 
     global_binding: $ => seq(
@@ -134,16 +134,21 @@ module.exports = grammar({
     ),
 
     constant_declaration: $ => seq(
+      optional('export'),
       'def',
       commaSep1(seq($.identifier, ':', $.type, '=', $.expression)),
+      ';',
     ),
 
     type_declaration: $ => seq(
+      optional('export'),
       'type',
       optionalCommaSep1(seq($.identifier, '=', $.type)),
+      ';',
     ),
 
     function_declaration: $ => seq(
+      optional('export'),
       repeat($.function_attribute),
       'fn',
       field('name', $.identifier),
@@ -152,6 +157,7 @@ module.exports = grammar({
       ')',
       field('returns', optional($.type)),
       optional(seq('=', field('body', $.expression))),
+      ';',
     ),
 
     function_attribute: $ => choice(
@@ -258,6 +264,7 @@ module.exports = grammar({
 
     statement: $ => choice(
       $.break_statement,
+      $.continue_statement,
       $.defer_statement,
       $.yield_statement,
       $.static_operation,
@@ -285,6 +292,7 @@ module.exports = grammar({
 
     for_statement: $ => prec.right(seq(
       'for',
+      optional($.label),
       '(',
       optional(seq($.let_expression, ';')),
       seq(
@@ -299,6 +307,8 @@ module.exports = grammar({
 
     break_statement: $ => seq('break', optional($.label), ';'),
 
+    continue_statement: $ => seq('continue', optional($.label), ';'),
+
     defer_statement: $ => seq('defer', $.statement),
 
     return_statement: $ => prec.right(seq('return', optional($.expression))),
@@ -306,7 +316,7 @@ module.exports = grammar({
     yield_statement: $ => seq(
       'yield',
       optional(choice(
-        seq($.label, ',', $.expression),
+        seq($.label, optional(seq(',', $.expression))),
         $.expression,
       )),
       ';',
@@ -492,7 +502,10 @@ module.exports = grammar({
 
     switch_expression: $ => seq(
       'switch',
+      optional($.label),
+      '(',
       $.expression,
+      ')',
       '{',
       repeat($.case),
       '}',
@@ -500,7 +513,10 @@ module.exports = grammar({
 
     match_expression: $ => seq(
       'match',
+      optional($.label),
+      '(',
       $.expression,
+      ')',
       '{',
       repeat($.case),
       '}',
