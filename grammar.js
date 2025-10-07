@@ -126,7 +126,11 @@ module.exports = grammar({
 
     global_binding: $ => seq(
       optional($.declaration_attribute),
-      $.identifier, ':', $.type, optional(seq('=', $.expression)),
+      optional('@threadlocal'),
+      $.identifier, choice(
+        seq(':', $.type, optional(seq('=', $.expression))),
+        seq('=', $.expression),
+      ),
     ),
 
     declaration_attribute: $ => seq(
