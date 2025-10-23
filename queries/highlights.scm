@@ -17,7 +17,7 @@
 ; Constants
 
 ((identifier) @constant
-  (#lua-match? @constant "^[A-Z_]+$"))
+  (#match? @constant "^[A-Z_]+$"))
 
 ; Includes
 
