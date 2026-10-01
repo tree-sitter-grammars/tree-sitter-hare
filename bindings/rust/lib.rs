@@ -5,33 +5,28 @@
 
 //! This crate provides Hare language support for the [tree-sitter][] parsing library.
 //!
-//! Typically, you will use the [language][language func] function to add this language to a
+//! Typically, you will use the [LANGUAGE] constant to add this language to a
 //! tree-sitter [Parser][], and then use the parser to parse some code:
 //!
 //! ```
 //! let code = "";
 //! let mut parser = tree_sitter::Parser::new();
-//! parser.set_language(tree_sitter_hare::language()).expect("Error loading Hare grammar");
+//! parser.set_language(&tree_sitter_hare::LANGUAGE.into()).expect("Error loading Hare grammar");
 //! let tree = parser.parse(code, None).unwrap();
 //! ```
 //!
 //! [Language]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Language.html
-//! [language func]: fn.language.html
 //! [Parser]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Parser.html
 //! [tree-sitter]: https://tree-sitter.github.io/
 
-use tree_sitter::Language;
+use tree_sitter_language::LanguageFn;
 
 extern "C" {
-    fn tree_sitter_hare() -> Language;
+    fn tree_sitter_hare() -> *const ();
 }
 
-/// Get the tree-sitter [Language][] for this grammar.
-///
-/// [Language]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Language.html
-pub fn language() -> Language {
-    unsafe { tree_sitter_hare() }
-}
+/// The tree-sitter language function for this grammar.
+pub const LANGUAGE: LanguageFn = unsafe { LanguageFn::from_raw(tree_sitter_hare) };
 
 /// The source of the Rust tree-sitter grammar description.
 pub const GRAMMAR: &str = include_str!("../../grammar.js");
@@ -62,7 +57,7 @@ mod tests {
     fn test_can_load_grammar() {
         let mut parser = tree_sitter::Parser::new();
         parser
-            .set_language(super::language())
+            .set_language(&super::LANGUAGE.into())
             .expect("Error loading Hare grammar");
     }
 
@@ -180,9 +175,28 @@ mod tests {
 
         let mut parser = tree_sitter::Parser::new();
         parser
-            .set_language(super::language())
+            .set_language(&super::LANGUAGE.into())
             .expect("Error loading Hare grammar");
 
         parser.parse(code, None).unwrap();
+    }
+
+    #[test]
+    fn test_parse_function() {
+        let mut parser = tree_sitter::Parser::new();
+        parser.set_language(&super::LANGUAGE.into()).unwrap();
+        let tree = parser
+            .parse("export fn main() void = { const x = add(1, 2); };", None)
+            .unwrap();
+        assert!(!tree.root_node().has_error());
+        assert_eq!(
+            tree.root_node()
+                .named_child(0)
+                .unwrap()
+                .named_child(0)
+                .unwrap()
+                .kind(),
+            "function_declaration"
+        );
     }
 }

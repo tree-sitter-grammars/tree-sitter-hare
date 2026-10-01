@@ -8,11 +8,11 @@ way.)
 
 ```toml
 [dependencies]
-tree-sitter = "~0.20.10"
+tree-sitter = "0.27"
 tree-sitter-hare = "1.0.0"
 ```
 
-Typically, you will use the [language][language func] function to add this
+Typically, you will use the [LANGUAGE] constant to add this
 grammar to a tree-sitter [Parser][], and then use the parser to parse some code:
 
 ```rust
@@ -26,15 +26,15 @@ export fn open_file(fs: *fs, path: str, flags: flags...) (io::file | error) = {
     };
 };
 "#;
-let mut parser = Parser::new();
-parser.set_language(tree_sitter_hare::language()).expect("Error loading Hare grammar");
+let mut parser = tree_sitter::Parser::new();
+parser.set_language(&tree_sitter_hare::LANGUAGE.into()).expect("Error loading Hare grammar");
 let parsed = parser.parse(code, None);
 ```
 
 If you have any questions, please reach out to us in the [tree-sitter
 discussions] page.
 
-[language func]: https://docs.rs/tree-sitter-hare/*/tree_sitter_hare/fn.language.html
+[LANGUAGE]: https://docs.rs/tree-sitter-hare/*/tree_sitter_hare/constant.LANGUAGE.html
 [parser]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Parser.html
 [tree-sitter]: https://tree-sitter.github.io/
 [tree-sitter crate]: https://crates.io/crates/tree-sitter
